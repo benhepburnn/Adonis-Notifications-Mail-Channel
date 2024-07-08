@@ -12,6 +12,6 @@ export class MailChannel extends NotificationChannel {
     if (mailMessage.mail instanceof NotificationMail)
       mailMessage.mail.setNotifiable(notification.notifiable!)
 
-    return (mailMessage.sendLater ? mail.sendLater : mail.send)(mailMessage.mail)
+    return (mailMessage.queue ? mail.sendLater : mail.send)(mailMessage.mail)
   }
 }

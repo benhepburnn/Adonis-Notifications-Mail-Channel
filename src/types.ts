@@ -4,7 +4,7 @@ import { Notifiable } from '@benhepburn/adonis-notifications/types'
 
 export type MailMessage = {
   mail: NotificationMail | MessageComposeCallback
-  sendLater?: boolean
+  queue?: boolean
 }
 
 export interface MailNotification {
