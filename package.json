@@ -1,6 +1,6 @@
 {
-  "name": "@benhepburn/adonis-notifications-aws-sns-channel",
-  "description": "An AWS SNS notification channel for @benhepburn/adonis-notifications",
+  "name": "@benhepburn/adonis-notifications-mail-channel",
+  "description": "An Adonis Mail notification channel for @benhepburn/adonis-notifications",
   "version": "1.0.0",
   "engines": {
     "node": ">=20.0.0"
@@ -36,12 +36,11 @@
     "adonis",
     "adonisjs",
     "notifications",
-    "sms",
+    "mail",
     "email",
     "adonis js",
     "provider",
-    "service",
-    "sns"
+    "service"
   ],
   "author": "benhepburn",
   "license": "MIT",
@@ -51,7 +50,7 @@
     "@adonisjs/eslint-config": "^1.2.1",
     "@adonisjs/prettier-config": "^1.2.1",
     "@adonisjs/tsconfig": "^1.2.1",
-    "@aws-sdk/credential-providers": "^3.540.0",
+    "@adonisjs/mail": "^9.2.2",
     "@benhepburn/adonis-notifications": "^0.4.5",
     "@japa/assert": "^2.1.0",
     "@japa/runner": "^3.1.1",
@@ -68,7 +67,7 @@
   },
   "peerDependencies": {
     "@adonisjs/core": "^6.2.0",
-    "@aws-sdk/credential-providers": "^3.540.0",
+    "@adonisjs/mail": "^9.2.2",
     "@benhepburn/adonis-notifications": "^0.4.5"
   },
   "publishConfig": {
@@ -95,6 +94,5 @@
   },
   "prettier": "@adonisjs/prettier-config",
   "dependencies": {
-    "@aws-sdk/client-sns": "^3.540.0"
   }
 }

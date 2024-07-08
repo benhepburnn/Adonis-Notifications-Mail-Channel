@@ -1,41 +1,69 @@
-# AdonisJS Notifications - AWS SNS Channel
+# AdonisJS Notifications - Mail Channel
 
-This package requires @benhepburn/adonis-notifications and @aws-sdk/credential-providers.
+This package requires @benhepburn/adonis-notifications and @adonisjs/mail.
 
 ## Install
 
-Install peer dependency @aws-sdk/credential-providers and this package from npm:
+Install peer dependencies @benhepburn/adonis-notifications and @adonisjs/mail, and then install this package from npm:
 
 ```sh
-npm install @aws-sdk/credential-providers @benhepburn/adonis-notifications-aws-sns-channel
+npm install @benhepburn/adonis-notifications-mail-channel
 ```
 
 or
 
 ```sh
-pnpm install @aws-sdk/credential-providers @benhepburn/adonis-notifications-aws-sns-channel
+pnpm install @benhepburn/adonis-notifications-mail-channel
 ```
 
 or
 
 ```sh
-yarn add @aws-sdk/credential-providers @benhepburn/adonis-notifications-aws-sns-channel
-```
-
-Then, configure the package for Adonis:
-
-```sh
-node ace configure @benhepburn/adonis-notifications-aws-sns-channel
+yarn add @benhepburn/adonis-notifications-mail-channel
 ```
 
 ## Configuration
 
-Edit config/aws_sns_channel.ts as needed, then add the channel to config/notifications.ts.
+[Configure @adonisjs/mail as required](https://docs.adonisjs.com/guides/digging-deeper/mail), then add the mail channel to config/notifications.ts.
 
-You must set the AWS region:
-```dotenv
-AWS_SNS_REGION=<region e.g. ap-southeast-2>
+```ts
+import { MailChannel } from '@benhepburn/adonis-notifications-mail-channel';
+...
+
+const notificationsConfig = defineConfig({
+  channels: {
+    ...
+    mail: MailChannel,
+  },
+});
 ```
 
-You can set the AWS credentials in your .env file; if they aren't set then
-the default node credentials provider for AWS will be used.
+## Usage
+
+Create a class-based or callback mail message as per the @adonisjs/mail docs.
+Then create a new file in app/notifications e.g. app/notifications/sign_up_notification.ts:
+
+```ts
+import { Notification } from '@benhepburn/adonis-notifications';
+import { MailMessage, MailNotification } from '@benhepburn/adonis-notifications-aws-sns-channel/types';
+
+export default class SignUpNotification extends Notification implements MailNotification {
+  constructor() {
+    super();
+  }
+
+  via(): string[] {
+    return ['mail'];
+  }
+
+  toMail(): MailMessage {
+    return {
+      mail: new SignUpMail(),
+      // OR
+      mail: (message) => message.to(this.notifiable!.notificationGetEmail())...
+      
+      sendLater: true, // Optional; sends the mail queued instead of immediately
+    };
+  }
+}
+```

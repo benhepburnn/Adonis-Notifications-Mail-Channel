@@ -1,15 +1,11 @@
-export type NotificationsAwsSnsChannelConfig = {
-  awsRegion: string
-  awsAccessKeyId?: string
-  awsSecretAccessKey?: string
-  awsSessionToken?: string
+import { BaseMail } from '@adonisjs/mail'
+import { MessageComposeCallback } from '@adonisjs/mail/types'
+
+export type MailMessage = {
+  mail: BaseMail | MessageComposeCallback
+  sendLater?: boolean
 }
 
-export type SnsSmsMessage = {
-  message: string
-  to: string
-}
-
-export interface SnsSmsNotification {
-  toSnsSms: () => SnsSmsMessage
+export interface MailNotification {
+  toMail: () => MailMessage
 }
