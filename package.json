@@ -1,7 +1,7 @@
 {
   "name": "@benhepburn/adonis-notifications-mail-channel",
   "description": "An Adonis Mail notification channel for @benhepburn/adonis-notifications",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -93,6 +93,5 @@
     "extends": "@adonisjs/eslint-config/package"
   },
   "prettier": "@adonisjs/prettier-config",
-  "dependencies": {
-  }
+  "dependencies": {}
 }
