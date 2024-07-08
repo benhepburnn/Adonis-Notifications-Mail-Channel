@@ -1,5 +1,5 @@
 import { Notification, NotificationChannel } from '@benhepburn/adonis-notifications'
-import { MailNotification } from './types.js'
+import { MailNotification, NotificationMail } from './types.js'
 import mail from '@adonisjs/mail/services/main'
 
 export class MailChannel extends NotificationChannel {
@@ -9,6 +9,9 @@ export class MailChannel extends NotificationChannel {
 
   async send(notification: Notification & MailNotification): Promise<any> {
     const mailMessage = notification.toMail()
+    if (mailMessage.mail instanceof NotificationMail)
+      mailMessage.mail.setNotifiable(notification.notifiable!)
+
     return (mailMessage.sendLater ? mail.sendLater : mail.send)(mailMessage.mail)
   }
 }
