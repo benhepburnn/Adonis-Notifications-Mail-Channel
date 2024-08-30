@@ -28,7 +28,7 @@
     "prebuild": "npm run lint && npm run clean",
     "build": "tsc",
     "postbuild": "npm run copy:templates",
-    "release": "np",
+    "release": "np --no-cleanup",
     "version": "npm run build",
     "prepublishOnly": "npm run build"
   },
@@ -46,12 +46,12 @@
   "license": "MIT",
   "devDependencies": {
     "@adonisjs/assembler": "^7.0.0",
-    "@adonisjs/core": "^6.2.0",
+    "@adonisjs/core": "^6.2.3",
     "@adonisjs/eslint-config": "^1.2.1",
     "@adonisjs/prettier-config": "^1.2.1",
     "@adonisjs/tsconfig": "^1.2.1",
     "@adonisjs/mail": "^9.2.2",
-    "@benhepburn/adonis-notifications": "^0.4.5",
+    "@benhepburn/adonis-notifications": "^0.4.6",
     "@japa/assert": "^2.1.0",
     "@japa/runner": "^3.1.1",
     "@swc/core": "^1.3.102",
@@ -66,9 +66,9 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@adonisjs/core": "^6.2.0",
+    "@adonisjs/core": "^6.2.3",
     "@adonisjs/mail": "^9.2.2",
-    "@benhepburn/adonis-notifications": "^0.4.5"
+    "@benhepburn/adonis-notifications": "^0.4.6"
   },
   "publishConfig": {
     "access": "public",
