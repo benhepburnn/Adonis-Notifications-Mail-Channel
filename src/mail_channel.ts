@@ -11,7 +11,7 @@ export class MailChannel extends NotificationChannel {
   async send(notification: Notification & MailNotification): Promise<any> {
     const mail: MailService = await app.container.make('mail.manager')
 
-    const mailMessage = notification.toMail()
+    const mailMessage = await notification.toMail()
     if (mailMessage.mail instanceof NotificationMail)
       mailMessage.mail.setNotifiable(notification.notifiable!)
 

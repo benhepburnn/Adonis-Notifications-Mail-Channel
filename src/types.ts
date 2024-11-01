@@ -8,7 +8,7 @@ export type MailMessage = {
 }
 
 export interface MailNotification {
-  toMail: () => MailMessage
+  toMail: () => Promise<MailMessage>
 }
 
 export abstract class NotificationMail extends BaseMail {
