@@ -2,13 +2,14 @@ import { Notification, NotificationChannel } from '@benhepburn/adonis-notificati
 import { MailNotification, NotificationMail } from './types.js'
 import app from '@adonisjs/core/services/app'
 import { MailService } from '@adonisjs/mail/types'
+import { NotifiableEmail } from '@benhepburn/adonis-notifications/types'
 
 export class MailChannel extends NotificationChannel {
   constructor() {
     super()
   }
 
-  async send(notification: Notification & MailNotification): Promise<any> {
+  async send(notification: Notification<NotifiableEmail> & MailNotification): Promise<any> {
     const mail: MailService = await app.container.make('mail.manager')
 
     const mailMessage = await notification.toMail()
