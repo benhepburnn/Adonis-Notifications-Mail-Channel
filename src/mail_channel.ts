@@ -1,5 +1,5 @@
 import { Notification, NotificationChannel } from '@benhepburn/adonis-notifications'
-import { BulkSendNotSupportedException, MailNotification, NotificationMail } from './types.js'
+import { MailNotification } from './types.js'
 import app from '@adonisjs/core/services/app'
 import { MailService } from '@adonisjs/mail/types'
 import { NotifiableEmail } from '@benhepburn/adonis-notifications/types'
@@ -10,14 +10,13 @@ export class MailChannel extends NotificationChannel {
   }
 
   async send(notification: Notification<NotifiableEmail> & MailNotification): Promise<any> {
-    const mail: MailService = await app.container.make('mail.manager')
+    const mailService: MailService = await app.container.make('mail.manager')
 
-    if (Array.isArray(notification.notifiable)) throw new BulkSendNotSupportedException()
+    const { mail, queue } = await notification.toMail()
 
-    const mailMessage = await notification.toMail()
-    if (mailMessage.mail instanceof NotificationMail)
-      mailMessage.mail.setNotifiable(notification.notifiable!)
-
-    return mailMessage.queue ? mail.sendLater(mailMessage.mail) : mail.send(mailMessage.mail)
+    for (const notifiable in notification.notifiable) {
+      mail.setNotifiable(notifiable)
+      queue ? await mailService.sendLater(mail) : await mailService.send(mail)
+    }
   }
 }

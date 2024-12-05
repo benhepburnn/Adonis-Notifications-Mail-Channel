@@ -51,7 +51,7 @@
     "@adonisjs/mail": "^9.2.2",
     "@adonisjs/prettier-config": "^1.4.0",
     "@adonisjs/tsconfig": "^1.4.0",
-    "@benhepburn/adonis-notifications": "^0.6.1",
+    "@benhepburn/adonis-notifications": "^1.0.0",
     "@japa/assert": "^2.1.0",
     "@japa/runner": "^3.1.4",
     "@swc/core": "^1.7.42",
@@ -68,7 +68,7 @@
   "peerDependencies": {
     "@adonisjs/core": "^6.2.3",
     "@adonisjs/mail": "^9.2.2",
-    "@benhepburn/adonis-notifications": "^0.6.1"
+    "@benhepburn/adonis-notifications": "^1.0.0"
   },
   "publishConfig": {
     "access": "public",
