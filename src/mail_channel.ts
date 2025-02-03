@@ -14,9 +14,7 @@ export class MailChannel extends NotificationChannel {
 
     const { mail, queue } = await notification.toMail()
 
-    for (const notifiable in notification.notifiable) {
-      mail.setNotifiable(notifiable)
-      queue ? await mailService.sendLater(mail) : await mailService.send(mail)
-    }
+    mail.setNotifiable(notification.notifiable!)
+    queue ? await mailService.sendLater(mail) : await mailService.send(mail)
   }
 }

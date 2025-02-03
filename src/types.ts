@@ -11,8 +11,12 @@ export interface MailNotification {
 }
 
 export abstract class NotificationMail extends BaseMail {
-  setNotifiable(notifiable: NotifiableEmail) {
-    this.message.to(notifiable.notificationGetEmail())
+  setNotifiable(notifiables: NotifiableEmail | NotifiableEmail[]) {
+    const emails = Array.isArray(notifiables)
+      ? notifiables.map((notifiable) => notifiable.notificationGetEmail())
+      : [notifiables.notificationGetEmail()]
+
+    emails.forEach((email) => this.message.to(email))
     return this
   }
 }
