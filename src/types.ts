@@ -3,7 +3,6 @@ import { NotifiableEmail } from '@benhepburn/adonis-notifications/types'
 
 export type MailMessage = {
   mail: NotificationMail
-  queue?: boolean
 }
 
 export interface MailNotification {

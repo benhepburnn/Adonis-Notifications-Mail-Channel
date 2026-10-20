@@ -12,9 +12,10 @@ export class MailChannel extends NotificationChannel {
   async send(notification: Notification<NotifiableEmail> & MailNotification): Promise<any> {
     const mailService: MailService = await app.container.make('mail.manager')
 
-    const { mail, queue } = await notification.toMail()
+    const { mail } = await notification.toMail()
 
     mail.setNotifiable(notification.notifiable!)
-    queue ? await mailService.sendLater(mail) : await mailService.send(mail)
+    // Await delivery so notification-level retries receive SMTP failures.
+    await mailService.send(mail)
   }
 }

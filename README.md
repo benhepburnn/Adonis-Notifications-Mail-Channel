@@ -56,14 +56,24 @@ export default class SignUpNotification extends Notification implements MailNoti
     return ['mail'];
   }
 
-  toMail(): MailMessage {
+  async toMail(): Promise<MailMessage> {
     return {
       mail: new SignUpMail(),
-      // OR
-      mail: (message) => message.to(this.notifiable!.notificationGetEmail())...
-      
-      sendLater: true, // Optional; sends the mail queued instead of immediately
     };
   }
 }
 ```
+
+## Durable notification delivery
+
+Version 3.0 requires `@benhepburn/adonis-notifications` 1.1 or later. The mail
+channel always awaits `mail.send()`. SMTP failures propagate to the caller or,
+when the notification is queued, to the durable worker for retry.
+
+The mail-specific `queue` option has been removed. Remove it from `toMail()`
+results, which now contain only `{ mail }`. To send in the background, queue the
+whole notification through `notifications.queueNotification()` and configure a
+queue adapter in the core package.
+
+Publish/install the core package first, then this channel. Existing immediate
+notifications keep their delivery behaviour after removing the obsolete option.
