@@ -1,5 +1,5 @@
 import { BaseMail } from '@adonisjs/mail'
-import { NotifiableEmail } from '@benhepburn/adonis-notifications/types'
+import type { NotifiableEmail } from '@benhepburn/adonis-notifications/types'
 
 export type MailMessage = {
   mail: NotificationMail

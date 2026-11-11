@@ -5,56 +5,24 @@ on:
   - pull_request
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install
-        run: npm install
-      - name: Run lint
-        run: npm run lint
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install
-        run: npm install
-      - name: Run typecheck
-        run: npm run typecheck
-
-  tests:
+  compatibility:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version:
-          - 20.10.0
-          - 21.x
+        adonis: [6, 7]
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install
-        run: npm install
-      - name: Run tests
-        run: npm test
-  windows:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        node-version:
-          - 20.10.0
-          - 21.x
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install
-        run: npm install
-      - name: Run tests
-        run: npm test
+          node-version: 24
+      - uses: pnpm/action-setup@v6
+      - name: Install AdonisJS v7 dependencies
+        if: matrix.adonis == 7
+        run: pnpm install --frozen-lockfile --strict-peer-dependencies
+      - name: Install AdonisJS v6 dependencies
+        if: matrix.adonis == 6
+        run: pnpm add --save-dev --strict-peer-dependencies @adonisjs/core@6.21.0 @adonisjs/mail@9.2.2 @benhepburn/adonis-notifications@1.1.0
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
